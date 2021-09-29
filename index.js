@@ -31,27 +31,26 @@ const execute = async () => {
 
         //Iniciamos los jugadores. Comienza el jugador
         let currentFighter = Position.LEFT;
-        let currentDefender = Position.RIGHT;
-
-        //Extraemos los datos necesarios   
-        const combatPlayersAttr = new Array(2);
-       
-        //Extraemos los atributos
-        combatPlayersAttr[0] = Object.assign(combatPlayers[0].powerstats);
-        combatPlayersAttr[1] = Object.assign(combatPlayers[1].powerstats);
-
-        //Añadimos el nombre
-        combatPlayersAttr[0].name = combatPlayers[0].name;
-        combatPlayersAttr[1].name = combatPlayers[1].name;
-
-        //Calculamos y añadimos la vida de inicio
-        combatPlayersAttr[0].life = calculateLife(combatPlayersAttr[0]);
-        combatPlayersAttr[1].life = calculateLife(combatPlayersAttr[1]);
+        let currentDefender = Position.RIGHT; 
         
-        //console.log(combatPlayersAttr);
+       
+        //Creamos objetos nuevos con los siguientes campos para mejor manejo y los introducimos en el array combatPlayersAttr
+        // {name, intelligence, strength, speed, durability, power, combat, life}
+
+        const combatPlayersAttr = new Array(2);
+        combatPlayersAttr[0] = Object.assign({ name: combatPlayers[0].name}, 
+                                               combatPlayers[0].powerstats,
+                                             { life: calculateLife(combatPlayers[0].powerstats) }
+                                            );
+        
+        combatPlayersAttr[1] = Object.assign({ name: combatPlayers[1].name}, 
+                                               combatPlayers[1].powerstats,
+                                             { life: calculateLife(combatPlayers[1].powerstats) }
+                                            );
         
         //EMPIEZA EL COMBATE!!!!
         console.log('Empieza el combate entre ' + combatPlayersAttr[0].name + ' y ' + combatPlayersAttr[1].name + " !!!!!!!!!");
+        console.log('----------------------------------------------------------------');
         
         //1) Determinamos quién comienza a pelear
         const leftPlayerSkill  = combatPlayersAttr[Position.LEFT].strength + combatPlayersAttr[Position.LEFT].speed;
@@ -59,7 +58,7 @@ const execute = async () => {
 
         showAttrs(combatPlayersAttr);
         
-        let areBothFightersAlive = combatPlayersAttr[0].life > 0 && combatPlayersAttr[1].life > 0;
+        
 
         //Vemos quién comienza. Si hay empate comienza el de la IZDA 
         Player.STRIKER  = (leftPlayerSkill >= rightPlayerSkill) ? Position.LEFT : Position.RIGHT;
@@ -68,8 +67,11 @@ const execute = async () => {
         console.log('El primer asalto es para ' + combatPlayersAttr[Player.STRIKER].name);
         console.log('-----------------------------');
 
+        //Contador de rondas
         let round = 0;
 
+        let areBothFightersAlive = combatPlayersAttr[0].life > 0 && combatPlayersAttr[1].life > 0;
+       
         while (areBothFightersAlive)
         {
             round++;
@@ -81,8 +83,7 @@ const execute = async () => {
 
             //2) Determinamos si el atacante golpea
             let random_D100 = createRandomNumber(1, 100);
-            const hasStrikeSuccess = (random_D100 <= combatPlayersAttr[Player.STRIKER].combat) ? 
-                                                                                            Combat.SUCCESS : Combat.FAILED;
+            const hasStrikeSuccess = (random_D100 <= combatPlayersAttr[Player.STRIKER].combat) ? Combat.SUCCESS : Combat.FAILED;
                       
             if (hasStrikeSuccess)
             {
@@ -90,7 +91,7 @@ const execute = async () => {
             }
             else
             {
-                console.log(combatPlayersAttr[Player.STRIKER].name + " ha fallado");
+                console.log(combatPlayersAttr[Player.STRIKER].name + " obtiene un " + random_D100 + " y ha fallado");
                 //Cambiamos el turno y volvemos a empezar
                 Player.STRIKER ^= 1;
                 Player.DEFENDER ^= 1;
@@ -151,6 +152,10 @@ const execute = async () => {
     }
 }
 
+
+// ----------------------------------------
+// FUNCIONES AUXILIARES
+// ----------------------------------------
 function get2RandomNumbers(min, max)
 {
     const firstNumber = createRandomNumber(min, max);
