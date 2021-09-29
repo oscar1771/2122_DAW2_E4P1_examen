@@ -28,12 +28,7 @@ const execute = async () => {
 
         //Creamos nuestros heroes para el combate
         const combatPlayers = createHeroes(randomHeroesIndexes, heroData);
-
-        //Iniciamos los jugadores. Comienza el jugador
-        let currentFighter = Position.LEFT;
-        let currentDefender = Position.RIGHT; 
-        
-       
+              
         //Creamos objetos nuevos con los siguientes campos para mejor manejo y los introducimos en el array combatPlayersAttr
         // {name, intelligence, strength, speed, durability, power, combat, life}
 
@@ -48,6 +43,7 @@ const execute = async () => {
                                              { life: calculateLife(combatPlayers[1].powerstats) }
                                             );
         
+        
         //EMPIEZA EL COMBATE!!!!
         console.log('Empieza el combate entre ' + combatPlayersAttr[0].name + ' y ' + combatPlayersAttr[1].name + " !!!!!!!!!");
         console.log('----------------------------------------------------------------');
@@ -59,7 +55,6 @@ const execute = async () => {
         showAttrs(combatPlayersAttr);
         
         
-
         //Vemos quién comienza. Si hay empate comienza el de la IZDA 
         Player.STRIKER  = (leftPlayerSkill >= rightPlayerSkill) ? Position.LEFT : Position.RIGHT;
         Player.DEFENDER = Player.STRIKER ^ 1; //El defensor será el Atacante XOR 1
@@ -143,7 +138,7 @@ const execute = async () => {
         //Fin del combate 
         combatPlayersAttr[0].life <= 0 ? console.log(combatPlayersAttr[0].name + " ha sido derrotado.") :
         combatPlayersAttr[1].life <= 0 ? console.log(combatPlayersAttr[1].name + " ha sido derrotado.") : console.log ("ERROR: IMPOSIBLE");
-
+        
         return result;       
     }
     catch (error)
@@ -208,6 +203,3 @@ function showAttrs(combatPlayersAttr)
 
 //Ejecutamos el combate
 execute().then(res => res);
-
-
-
