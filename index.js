@@ -117,8 +117,7 @@ const execute = async () => {
             }
             else
             {
-                console.log(combatPlayersAttr[Player.DEFENDER].name + " obtiene un " + random_D100 + " y no logra defender el ataque");
-                
+                console.log(combatPlayersAttr[Player.DEFENDER].name + " obtiene un " + random_D100 + " y no logra defender el ataque");              
             }
 
             //4) Calculamos el daño del ataque
@@ -142,7 +141,7 @@ const execute = async () => {
 
         //Fin del combate 
         combatPlayersAttr[0].life <= 0 ? console.log(combatPlayersAttr[0].name + " ha sido derrotado.") :
-        combatPlayersAttr[1].life <= 0 ? console.log(combatPlayersAttr[1].name + " ha sido derrotado.") : console.log ("IMPOSIBLE");
+        combatPlayersAttr[1].life <= 0 ? console.log(combatPlayersAttr[1].name + " ha sido derrotado.") : console.log ("ERROR: IMPOSIBLE");
 
         return result;       
     }
