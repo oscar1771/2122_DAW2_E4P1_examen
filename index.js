@@ -24,7 +24,7 @@ const execute = async () => {
         const heroData = result.data;
         const numHeroes = heroData.length;
 
-        const randomHeroesIndexes = get2RandomNumbers(0, numHeroes);
+        const randomHeroesIndexes = get2RandomNumbers(0, numHeroes - 1);
 
         //Creamos nuestros heroes para el combate
         const combatPlayers = createHeroes(randomHeroesIndexes, heroData);
