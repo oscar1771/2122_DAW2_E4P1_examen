@@ -1,5 +1,6 @@
 const data = require ('./service');
 
+
 const Position  = {
     LEFT: 0,
     RIGHT: 1
