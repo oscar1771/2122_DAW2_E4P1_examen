@@ -98,7 +98,7 @@ const execute = async () => {
             }
 
             //3) Vemos si hay defensa por parte del defensor
-            const defenseValue = Math.ceil(combatPlayersAttr[Player.STRIKER].combat + combatPlayersAttr[Player.STRIKER].speed) / 2;
+            const defenseValue = Math.ceil(combatPlayersAttr[Player.DEFENDER].combat + combatPlayersAttr[Player.DEFENDER].speed) / 2;
                       
             random_D100 = createRandomNumber(1, 100);
             const hasDefenseSuccess = random_D100 <= defenseValue ? Combat.SUCCESS : Combat.FAILED;
